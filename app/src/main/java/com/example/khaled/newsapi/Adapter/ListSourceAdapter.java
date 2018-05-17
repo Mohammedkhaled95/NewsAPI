@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.amulyakhare.textdrawable.TextDrawable;
 import com.example.khaled.newsapi.Common.Common;
 import com.example.khaled.newsapi.Interface.IconBetterService;
 import com.example.khaled.newsapi.Interface.ItemClickListener;
@@ -20,6 +19,7 @@ import com.example.khaled.newsapi.ListNews;
 import com.example.khaled.newsapi.Model.IconBetterIdea;
 import com.example.khaled.newsapi.Model.WebSite;
 import com.example.khaled.newsapi.R;
+import com.github.ivbaranov.mli.MaterialLetterIcon;
 import com.squareup.picasso.Picasso;
 
 import java.lang.reflect.Type;
@@ -38,8 +38,7 @@ class ListSourceViewHolder extends RecyclerView.ViewHolder implements View.OnCli
 
     ItemClickListener itemClickListener;
 
-    ImageView sourceImage;
-    TextDrawable textDrawable;
+    MaterialLetterIcon sourceImage;
     TextView sourceTitle;
 
 
@@ -49,20 +48,11 @@ class ListSourceViewHolder extends RecyclerView.ViewHolder implements View.OnCli
     public ListSourceViewHolder(View itemView) {
         super(itemView);
 
-        sourceImage = (ImageView) itemView.findViewById(R.id.source_image);
+        sourceImage = (MaterialLetterIcon) itemView.findViewById(R.id.source_image);
         sourceTitle = (TextView) itemView.findViewById(R.id.source_name);
         
-        textDrawable = TextDrawable.builder().buildRect("M",R.color.colorLetter);
-        sourceImage.setImageDrawable(textDrawable);
 
 
-         /*sourceImage = new MaterialLetterIcon.Builder(itemView.getContext())
-                .shapeType(MaterialLetterIcon.Shape.CIRCLE)
-                .letterColor(R.color.colorLetter)
-                .letterSize(26)
-                .shapeColor(R.color.colorBackground)
-                 .borderColor(android.R.color.white)
-                .create();*/
 
 
 
@@ -161,10 +151,24 @@ public class ListSourceAdapter extends RecyclerView.Adapter<ListSourceViewHolder
             }
         });
 */
+        firstLetter = String.valueOf(webSite.getSources().get(position).getName().toString().substring(0,1));
+
+
+        holder.sourceImage.setInitials(true);
+        holder.sourceImage.setLetterSize(26);
+        holder.sourceImage.setShapeColor(R.color.colorBackground);
+        holder.sourceImage.setLetterColor(R.color.colorLetter);
+        holder.sourceImage.setLettersNumber(2);
+
+        holder.sourceImage.setLetter(firstLetter);
+
+
+        holder.sourceImage.setShapeType(MaterialLetterIcon.Shape.RECT);
+
+
 
         holder.sourceTitle.setText(webSite.getSources().get(position).getName());
 
-      firstLetter = String.valueOf(webSite.getSources().get(position).getName().toString().charAt(0));
 
 
 
